@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Dec 18, 2025 at 12:13 PM
--- Server version: 8.0.40
--- PHP Version: 8.3.14
+-- Host: localhost:3306
+-- Generation Time: Dec 20, 2025 at 04:34 AM
+-- Server version: 5.7.24
+-- PHP Version: 8.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `follows` (
   `following_user_username` varchar(50) DEFAULT NULL,
   `followed_user_username` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -40,9 +40,9 @@ CREATE TABLE `follows` (
 --
 
 CREATE TABLE `hashtags` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `tag_name` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -52,9 +52,9 @@ CREATE TABLE `hashtags` (
 
 CREATE TABLE `likes` (
   `user_username` varchar(50) DEFAULT NULL,
-  `post_id` int DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -63,13 +63,21 @@ CREATE TABLE `likes` (
 --
 
 CREATE TABLE `posts` (
-  `id` int NOT NULL,
-  `parent_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
   `body` text,
   `user_username` varchar(50) NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `parent_id`, `body`, `user_username`, `status`, `created_at`) VALUES
+(1, NULL, 'Hello, this is a test, a test is a test, and testing is a test.\r\n\r\nI love hamburger.', 'lacticmilk', 'online', '2025-12-20 04:16:05'),
+(2, NULL, 'Tes beberapa gambar dengan aspect ratio berbeda', 'vespin_p', 'online', '2025-12-20 04:23:38');
 
 -- --------------------------------------------------------
 
@@ -78,9 +86,9 @@ CREATE TABLE `posts` (
 --
 
 CREATE TABLE `post_hashtags` (
-  `post_id` int DEFAULT NULL,
-  `hashtag_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `post_id` int(11) DEFAULT NULL,
+  `hashtag_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -89,12 +97,23 @@ CREATE TABLE `post_hashtags` (
 --
 
 CREATE TABLE `post_media` (
-  `id` int NOT NULL,
-  `post_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `post_id` int(11) DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL,
   `media_type` varchar(20) DEFAULT NULL,
-  `order_index` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `order_index` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `post_media`
+--
+
+INSERT INTO `post_media` (`id`, `post_id`, `file_url`, `media_type`, `order_index`) VALUES
+(1, 1, 'public/uploads/posts/hamburger.jpg', 'IMAGE', 0),
+(2, 2, 'public/uploads/posts/smolpc.png', 'IMAGE', 3),
+(3, 2, 'public/uploads/posts/mc.png', 'IMAGE', 2),
+(4, 2, 'public/uploads/posts/scissors.png', 'IMAGE', 1),
+(5, 2, 'public/uploads/posts/vivian.jpg', 'IMAGE', 0);
 
 -- --------------------------------------------------------
 
@@ -109,14 +128,15 @@ CREATE TABLE `users` (
   `profile_pic` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL COMMENT 'Hashed in PHP',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`username`, `displayname`, `bio`, `profile_pic`, `password`, `created_at`) VALUES
-('lacticmilk', 'Kayla v Bridget', NULL, NULL, '$2y$10$K4F2qE5buZABFo20otrBc.06sBkRANXwMZAJg5TYJI7Vn941K/qA.', '2025-10-20 15:33:55');
+('lacticmilk', 'Kayla v Bridget', NULL, NULL, '$2y$10$.asuE.Ka1u2MJ3rgUoto5eNV4bhAFtRvxz9rsljTfIBSkZkUToIUi', '2025-10-20 15:33:55'),
+('vespin_p', 'Andy', NULL, NULL, '$2y$10$0w5vUyWkAUOXAvmBc.M7FOQ3aU.UpNWiU7gKNvgPLH4dIBxdooQku', '2025-12-20 04:22:18');
 
 --
 -- Indexes for dumped tables
@@ -179,19 +199,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `hashtags`
 --
 ALTER TABLE `hashtags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `post_media`
 --
 ALTER TABLE `post_media`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
