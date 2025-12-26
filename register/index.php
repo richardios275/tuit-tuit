@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,12 +16,22 @@
 
 <body class="d-flex justify-content-center align-items-center py-4">
   <main class="tuittuit-bg mb-2">
-    <form action="actions/register_action.php" method="post" class="mx-4">
+    <form action="../actions/register_action.php" method="post" class="mx-4">
       <div class="pb-5">
         <h1 class="tuittuit-title">
           tuit tuit</h1>
       </div>
       <h1>Create your account</h1>
+      <?php
+      if (isset($_SESSION["regist_errors"])) {
+        $errormessage = "";
+        for ($i = 0; $i < count($_SESSION["regist_errors"]); $i++ ) {
+          $errormessage .= $_SESSION["regist_errors"][$i] ."; ";
+        }
+        echo "<div class=\"alert alert-danger text-wrap\" role=\"alert\">". "An error occured: " . $errormessage ."</div>";
+        unset($_SESSION['regist_errors']);
+      }
+      ?>
 
       <div class="form-floating mb-2">
         <input type="text" class="form-control" id="usernameInput" name="username" placeholder="johnsmith7" required>
