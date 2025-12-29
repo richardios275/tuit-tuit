@@ -37,11 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare(query: "INSERT INTO users (username, password) VALUES (?, ?)");
             $stmt->execute([$username, $hashed_password]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Setup session and redirect
             $_SESSION['user_id'] = $user['username'];
             $_SESSION['logged_in'] = true;
             header("Location: ../home2.php");
+            exit();
 
         } catch (PDOException $e) {
             $errors[] = "Server error: " . $e->getMessage();
