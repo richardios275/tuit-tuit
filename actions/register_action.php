@@ -2,6 +2,16 @@
 session_start();
 require_once '../config/db.php';
 
+function isValidUsername(string $username): bool
+{
+    return preg_match('/^[a-zA-Z0-9_-]{3,20}$/', $username) === 1;
+}
+
+function isStrongPassword(string $password): bool
+{
+    return preg_match('/^(?=.*[A-Z])(?=.*[0-9\W]).{8,}$/', $password) === 1;
+}
+
 // Temp
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     unset($_SESSION['regist_errors']);
@@ -12,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Validation
-    if (strlen($username) < 3) {
-        $errors[] = 'Username must be at least 3 characters long';
+    if (isValidUsername($username)) {
+        $errors[] = 'Username must be at least 3 characters long and cannot contain special characters';
     }
 
-    if (strlen($password) < 8) {
-        $errors[] = 'Password must be at least 8 characters long';
+    if (isStrongPassword($password)) {
+        $errors[] = 'Password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number or special character';
     }
 
     if (empty($errors)) {
@@ -35,12 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare(query: "INSERT INTO users (username, password) VALUES (?, ?)");
+            $stmt = $pdo->prepare(query: "INSERT INTO users (username, password) VALUES (?, ?);");
             $stmt->execute([$username, $hashed_password]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Setup session and redirect
-            $_SESSION['user_id'] = $user['username'];
+            $_SESSION['user_id'] = $username;
             $_SESSION['logged_in'] = true;
             header("Location: ../home2.php");
             exit();
