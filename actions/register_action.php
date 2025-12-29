@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Validation
-    if (isValidUsername($username)) {
+    if (!isValidUsername($username)) {
         $errors[] = 'Username must be at least 3 characters long and cannot contain special characters';
     }
 
-    if (isStrongPassword($password)) {
+    if (!isStrongPassword($password)) {
         $errors[] = 'Password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number or special character';
     }
 
