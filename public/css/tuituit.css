@@ -8,6 +8,18 @@ tuittuit-title {
     font-family: "Tuit Tuit Regular" !important;
 }
 
-tuittuit-bg {
+.tuittuit-bg {
     background-color: rgb(124, 240, 139);
+}
+
+.tuittuit-fg {
+    background-color: rgb(51, 156, 65);
+}
+
+.tuittuit-sidenav-bg {
+    background-color: rgb(164, 103, 41);
+}
+
+.tuittuit-sidenav-fg {
+    background-color: rgb(116, 73, 30);
 }

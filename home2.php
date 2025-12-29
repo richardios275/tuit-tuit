@@ -15,20 +15,25 @@ $username = $_SESSION['user_id'];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="public/css/tuituit.css">
+
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons v1.31.1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" tabindex="-1">
             <div class="container">
 
                 <div>
-                    <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="collapse" href="#sidebar"
-                        aria-expanded="false" aria-controls="sidebar">
-                        🍔
+                    <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas" data-bs-target="#tuittuit-sidebar">
+                        <i class="bi bi-list"></i>
                     </button>
                     <a class="navbar-brand mx-2" href="#">Tuit Tuit</a>
                 </div>
@@ -36,16 +41,15 @@ $username = $_SESSION['user_id'];
                 <div class="navbar-nav">
                     <input class="form-control me-sm-2" type="text" placeholder="Search" />
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                        🔎
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
                 <div class="navbar-nav">
                     <form class="d-flex my-2 my-lg-0">
-
-                        <!-- Modal trigger button -->
+                        <!-- Post button -->
                         <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal"
                             data-bs-target="#uploadModal">
-                            Upload
+                            Post
                         </button>
                     </form>
                 </div>
@@ -54,6 +58,42 @@ $username = $_SESSION['user_id'];
 
     </header>
     <main>
+        <!-- Sidebar -->
+        <div class="offcanvas offcanvas-start show mt-5" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+            id="tuittuit-sidebar">
+            <div class="tuittuit-sidenav-bg offcanvas-body">
+                <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
+                    <!-- Content -->
+
+                    <div>
+                        <ul class="nav nav-pills flex-column pt-5">
+                            <li class="nav-item">
+                                <a class="nav-link fs-5 active" aria-current="page" href="#"><i class="bi bi-calendar"></i> Recent</a>
+                            </li>
+                            <li class="nav-item fs-5">
+                                <a class="nav-link" href="#"><i class="bi bi-arrow-up-right-square"></i> Trending</a>
+                            </li>
+                            <li class="nav-item fs-5">
+                                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- User -->
+                    <div>
+                        <div class="w-90 mb-2 tuittuit-sidenav-fg" style="height: 2px;"></div>
+                        <div class="container d-flex flex-row align-items-center">
+                            <image class="me-2 rounded-circle" id="userIcon" src="public/images/default_user.jpg"
+                                style="width: 40px; height: 40px;"></image>
+                            <h6 class="d-inline-block text-truncate fw-semibold mb-0" id="userName">
+                                OnlyTwentyCharacters
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
         <!-- Upload modal -->
         <div class="modal fade" id="uploadModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
@@ -92,27 +132,6 @@ $username = $_SESSION['user_id'];
             </div>
         </div>
 
-        <!-- Main Container with Flex -->
-        <div class="container-fluid">
-            <div class="row">
-
-                <!-- Sidebar Column (Collapsible) -->
-                <div class="col-auto p-0">
-                    <div class="collapse collapse-horizontal show" id="sidebar"
-                        style="background-color: rgb(164, 103, 41); min-height: 100vh;">
-                        <div class="sidebar-content p-3" style="width: 300px;">
-                            <!-- Sidebar Header -->
-                            <div class="sidebar-header mb-4">
-                                <h2 id="username" class="text-white"><?php echo $username ?></h2>
-                                <a href="/actions/logout_action.php"> <button class="btn btn-primary">Logout</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <section style="background-color: rgb(124, 240, 139);">
             <!-- Post area -->
             <div class="m-1 container">
@@ -127,6 +146,9 @@ $username = $_SESSION['user_id'];
     <footer>
         <!-- place footer here -->
     </footer>
+
+    <script src="home2.js"></script>
+
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
