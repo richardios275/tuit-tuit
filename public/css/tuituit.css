@@ -1,25 +1,31 @@
 /* Tuit Tuit logo */
 @font-face {
-    font-family: "Tuit Tuit Regular";
-    src: url(../typefaces/tuit-tuit-regular.otf.woff2);
+  font-family: "Tuit Tuit Regular";
+  src: url(../typefaces/tuit-tuit-regular.otf.woff2);
 }
 
-tuittuit-title {
-    font-family: "Tuit Tuit Regular" !important;
+#bs-override tuittuit-title {
+  font-family: "Tuit Tuit Regular" !important;
+  font-weight: bold !important;
+  color: #427a15 !important;
+}
+
+tuittuit-title:hover {
+  color: #2f570f !important;
 }
 
 .tuittuit-bg {
-    background-color: rgb(124, 240, 139);
+  background-color: rgb(124, 240, 139);
 }
 
 .tuittuit-fg {
-    background-color: rgb(51, 156, 65);
+  background-color: rgb(51, 156, 65);
 }
 
 .tuittuit-sidenav-bg {
-    background-color: rgb(164, 103, 41);
+  background-color: #7d451b;
 }
 
 .tuittuit-sidenav-fg {
-    background-color: rgb(116, 73, 30);
+  background-color: #472c1b;
 }

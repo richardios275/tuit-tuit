@@ -15,27 +15,29 @@ $username = $_SESSION['user_id'];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="public/css/tuituit.css">
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link rel="stylesheet" href="public/css/bootstrap.css">
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
     <!-- Bootstrap Icons v1.31.1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- TuitTuit CSS -->
+    <link rel="stylesheet" href="public/css/tuituit.css">
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" tabindex="-1">
-            <div class="container">
+            <div class="container-fluid">
 
                 <div>
                     <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas" data-bs-target="#tuittuit-sidebar">
                         <i class="bi bi-list"></i>
                     </button>
-                    <a class="navbar-brand mx-2" href="#">Tuit Tuit</a>
+                    <a class="navbar-brand mx-2" href="#">
+                        <img src="public/svg/logo.svg" alt="Tuit Tuit" height="30" background-color="">
+                    </a>
                 </div>
 
                 <div class="navbar-nav">
