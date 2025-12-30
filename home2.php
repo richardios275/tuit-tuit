@@ -99,20 +99,19 @@ $username = $_SESSION['user_id'];
         <!-- Upload modal -->
         <div class="modal fade" id="uploadModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitleId">
-                            Upload
+                            Post
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="postUploadForm" method="POST" action="actions/post_action.php">
                             <div class="mb-3">
-                                <label for="postBody" class="form-label">Post Content</label>
-                                <textarea class="form-control" id="postBody" name="body" rows="5"
+                                <textarea class="form-control" name="body" rows="5"
                                     placeholder="What's on your mind?" required></textarea>
+                                    <div class="form-text">0/300</div>
                             </div>
 
                             <input type="hidden" id="parentId" name="parent_id" value="0">
@@ -120,7 +119,7 @@ $username = $_SESSION['user_id'];
                             <input type="hidden" id="postStatus" name="status" value="active">
 
                             <div class="mb-3">
-                                <label for="postImage" class="form-label">Add Image (Optional)</label>
+                                <label for="postImage" class="form-label">Add Image (Not working)</label>
                                 <input class="form-control" type="file" id="postImage" name="image" accept="image/*">
                                 <div class="form-text">Max file size: 5MB</div>
                             </div>
