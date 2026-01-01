@@ -4,6 +4,15 @@ if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
     header("Location: login.php");
 }
 $username = $_SESSION['user_id'];
+
+$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
+$stmt = $pdo->query("SELECT * FROM posts");
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+print_r($posts);
+echo("<br>");
+$stmt = $pdo->query("Select * from post_media");
+$medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+print_r($medias)
 ?>
 
 <!doctype html>
@@ -25,6 +34,31 @@ $username = $_SESSION['user_id'];
     <!-- TuitTuit CSS -->
     <link rel="stylesheet" href="public/css/tuituit.css">
 </head>
+
+<style>
+    .post-squares {
+        height: fit-content;
+        margin: 20px;
+        padding: 10px;
+        background-color: white;
+        box-sizing: border-box;
+    }
+
+    .image-preview {
+        height: 200px;
+        margin: 10px;
+
+    }
+
+    .image-preview-container {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        contain: size;
+        height: 235px;
+        margin-top: 10px;
+    }
+</style>
 
 <body>
     <header>
@@ -137,7 +171,58 @@ $username = $_SESSION['user_id'];
             <!-- Post area -->
             <div class="m-1 container">
                 <div>
+                 
+                    <img src="public/uploads/posts/mc.png" alt="">
+                    <?php
+                        foreach($posts as $post){
+                            echo("<div class=\"post-squares\">");
 
+                            echo("<div>");
+                            echo($post['body']);
+                            echo("</div>");
+
+                            echo("<div class=\"image-preview-conainer\">");
+                            foreach($medias as $media){
+                                if($post['id']==$media['post_id']){
+                                    echo("<img src=\"".$media['file_url']."\" alt=\"\" class=\"image-preview\">");
+                                }
+                            }
+                            echo("</div>");
+
+                            echo("</div>");
+                        }
+
+
+
+
+                    ?>
+                    <div class="post-squares">
+                        <?php
+                            foreach($posts as $post){
+                                echo("<div>");
+                                echo($post['body']);
+                                echo("</div");
+                            }
+
+
+
+
+                        ?>
+                        <div>
+                            Cara menjadi lorem ipsum sangatlah mudah, <br>
+                            langkah pertama adalah harus melakukan dolor si amet <br>
+                            yang kedua adalah [redacted] <br>
+                            ketiga adalah... aku lupa :l <br>
+                        </div>
+                        <div class="image-preview-container">
+                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
+                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
+                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
+                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
+                            
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
