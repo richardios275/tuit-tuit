@@ -5,6 +5,8 @@ if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
 }
 $username = $_SESSION['user_id'];
 
+include_once('config/db.php');
+
 if(isset($_SESSION["search"])){
     $search=$_SESSION["search"];
 }else{
@@ -14,11 +16,10 @@ if(isset($_SESSION["search"])){
 unset($_SESSION["search"]);
 echo("your search: ".$search);
 
-$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 $stmt = $pdo->query("SELECT * FROM posts");
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->query("Select * from post_media");
+$stmt = $pdo->query("SELECT * from post_media");
 $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
