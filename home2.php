@@ -5,14 +5,22 @@ if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
 }
 $username = $_SESSION['user_id'];
 
+if(isset($_SESSION["search"])){
+    $search=$_SESSION["search"];
+}else{
+    echo("this is empty line");
+    $search="";
+}
+unset($_SESSION["search"]);
+echo("your search: ".$search);
+
 $pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 $stmt = $pdo->query("SELECT * FROM posts");
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-print_r($posts);
-echo("<br>");
+
 $stmt = $pdo->query("Select * from post_media");
 $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-print_r($medias)
+
 ?>
 
 <!doctype html>
@@ -74,12 +82,15 @@ print_r($medias)
                     </a>
                 </div>
 
-                <div class="navbar-nav">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search" />
+                <form class="navbar-nav" method="post">
+
+                    <!-- search bar -->
+                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="key" value=""/>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
-                </div>
+
+                </form>
                 <div class="navbar-nav">
                     <form class="d-flex my-2 my-lg-0">
                         <!-- Post button -->
@@ -181,7 +192,7 @@ print_r($medias)
                             echo($post['body']);
                             echo("</div>");
 
-                            echo("<div class=\"image-preview-conainer\">");
+                            echo("<div class=\"image-preview-container\">");
                             foreach($medias as $media){
                                 if($post['id']==$media['post_id']){
                                     echo("<img src=\"".$media['file_url']."\" alt=\"\" class=\"image-preview\">");
@@ -196,33 +207,7 @@ print_r($medias)
 
 
                     ?>
-                    <div class="post-squares">
-                        <?php
-                            foreach($posts as $post){
-                                echo("<div>");
-                                echo($post['body']);
-                                echo("</div");
-                            }
-
-
-
-
-                        ?>
-                        <div>
-                            Cara menjadi lorem ipsum sangatlah mudah, <br>
-                            langkah pertama adalah harus melakukan dolor si amet <br>
-                            yang kedua adalah [redacted] <br>
-                            ketiga adalah... aku lupa :l <br>
-                        </div>
-                        <div class="image-preview-container">
-                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
-                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
-                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
-                            <img src="public/uploads/posts/mc.png" alt="" class="image-preview">
-                            
-                        </div>
-
-                    </div>
+                    
                 </div>
 
             </div>
@@ -232,6 +217,8 @@ print_r($medias)
     <footer>
         <!-- place footer here -->
     </footer>
+
+
 
     <script src="home2.js"></script>
 
@@ -245,4 +232,8 @@ print_r($medias)
         crossorigin="anonymous"></script>
 </body>
 
+<?php
+    $_SESSION["search"]=$_POST["key"];
+
+?>
 </html>
