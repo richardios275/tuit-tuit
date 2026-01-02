@@ -8,15 +8,7 @@ $username = $_SESSION['user_id'];
 include_once('config/db.php');
 
 $search = $_GET['search'];
-
-if ($search != '') {
-    $search=$_GET['search'];
-}else{
-    echo("this is empty line");
-    $search="";
-}
-
-echo("your search: ".$search);
+$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 
 if (!empty($search)) {
     $stmt = $pdo->prepare("
@@ -102,6 +94,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 // Convert to indexed array
 $posts = array_values($posts);
 
+/*
+echo("<pre>\n");
+print_r($posts);
+echo("<pre>\n");
+*/
 ?>
 
 <!doctype html>
@@ -235,6 +232,7 @@ $posts = array_values($posts);
                     <div class="modal-body">
                         <form id="postUploadForm" method="POST" action="actions/post_action.php">
                             <div class="mb-3">
+                                <!-- the texts -->
                                 <textarea class="form-control" name="body" rows="5"
                                     placeholder="What's on your mind?" required></textarea>
                                     <div class="form-text">0/300</div>
@@ -243,7 +241,7 @@ $posts = array_values($posts);
                             <input type="hidden" id="parentId" name="parent_id" value="0">
 
                             <input type="hidden" id="postStatus" name="status" value="active">
-
+                            <!-- the image -->
                             <div class="mb-3">
                                 <label for="postImage" class="form-label">Add Image (Not working)</label>
                                 <input class="form-control" type="file" id="postImage" name="image" accept="image/*">
@@ -273,9 +271,9 @@ $posts = array_values($posts);
 
                             echo("<div class=\"image-preview-container\">");
                             foreach($post["media"] as $media){
-                                if($post['media_id']==$media['post_id']){
-                                    echo("<img src=\"".$media['file_url']."\" alt=\"\" class=\"image-preview\">");
-                                }
+                        
+                                echo("<img src=\"".$media['file_url']."\" alt=\"\" class=\"image-preview\">");
+                                
                             }
                             echo("</div>");
 
@@ -307,8 +305,4 @@ $posts = array_values($posts);
         crossorigin="anonymous"></script>
 </body>
 
-<?php
-    $_SESSION["search"]=$_POST["key"];
-
-?>
 </html>
