@@ -7,13 +7,15 @@ $username = $_SESSION['user_id'];
 
 include_once('config/db.php');
 
-if(isset($_SESSION["search"])){
-    $search=$_SESSION["search"];
+$search = $_GET['search'];
+
+if ($search != '') {
+    $search=$_GET['search'];
 }else{
     echo("this is empty line");
     $search="";
 }
-unset($_SESSION["search"]);
+
 echo("your search: ".$search);
 
 $stmt = $pdo->query("SELECT * FROM posts");
@@ -83,10 +85,10 @@ $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                 </div>
 
-                <form class="navbar-nav" method="post">
+                <form class="navbar-nav" method="GET" action="home2.php">
 
                     <!-- search bar -->
-                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="key" value=""/>
+                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="search" value=""/>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
@@ -107,7 +109,7 @@ $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </header>
     <main>
         <!-- Sidebar -->
-        <div class="offcanvas offcanvas-start show mt-5" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+        <div class="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" style="margin-top: 4.9rem;"
             id="tuittuit-sidebar">
             <div class="tuittuit-sidenav-bg offcanvas-body">
                 <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
@@ -179,12 +181,10 @@ $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <section style="background-color: rgb(124, 240, 139);">
+        <section class="d-flex justify-content-center">
             <!-- Post area -->
             <div class="m-1 container">
                 <div>
-                 
-                    <img src="public/uploads/posts/mc.png" alt="">
                     <?php
                         foreach($posts as $post){
                             echo("<div class=\"post-squares\">");
@@ -203,10 +203,6 @@ $medias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             echo("</div>");
                         }
-
-
-
-
                     ?>
                     
                 </div>
