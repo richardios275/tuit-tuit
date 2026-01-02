@@ -187,7 +187,7 @@ $posts = array_values($posts);
     </header>
     <main>
         <!-- Sidebar -->
-        <div class="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" style="margin-top: 4.9rem;"
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" style="margin-top: 4.9rem;"
             id="tuittuit-sidebar">
             <div class="tuittuit-sidenav-bg offcanvas-body">
                 <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
