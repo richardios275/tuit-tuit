@@ -13,52 +13,52 @@ $search = $_GET['search'];
 if (!empty($search)) {
     $stmt = $pdo->prepare("
     SELECT 
-        posts.id as post_id,
-        posts.parent_id,
-        posts.body,
-        posts.user_username,
-        posts.status,
-        posts.created_at,
-        
-        post_media.id as media_id,
-        post_media.post_id,
-        post_media.file_url,
-        post_media.media_type,
-        post_media.order_index
+    posts.id as post_id,
+    posts.parent_id,
+    posts.body,
+    posts.user_username,
+    posts.status,
+    posts.created_at,
+    post_media.id as media_id,
+    post_media.file_url,
+    post_media.media_type,
+    post_media.order_index
     FROM posts
     LEFT JOIN post_media ON posts.id = post_media.post_id
-    WHERE posts.parent_id IS NULL
-    AND (
-        posts.body LIKE :search
-        OR posts.user_username LIKE :search
-        )
+    WHERE posts.id IN (
+        SELECT id 
+        FROM posts 
+        WHERE parent_id IS NULL
+        AND (body LIKE :search OR user_username LIKE :search)
+    )
     ORDER BY 
         posts.created_at DESC,
-        post_media.order_index DESC
+        post_media.order_index DESC;
     ");
-    $stmt->execute([':search' => '%'.$search.'%']);
-}
-else {
+    $stmt->execute([':search' => '%' . $search . '%']);
+} else {
     $stmt = $pdo->query("
     SELECT 
-        posts.id as post_id,
-        posts.parent_id,
-        posts.body,
-        posts.user_username,
-        posts.status,
-        posts.created_at,
-        
-        post_media.id as media_id,
-        post_media.post_id,
-        post_media.file_url,
-        post_media.media_type,
-        post_media.order_index
+    posts.id as post_id,
+    posts.parent_id,
+    posts.body,
+    posts.user_username,
+    posts.status,
+    posts.created_at,
+    post_media.id as media_id,
+    post_media.file_url,
+    post_media.media_type,
+    post_media.order_index
     FROM posts
     LEFT JOIN post_media ON posts.id = post_media.post_id
-    WHERE posts.parent_id IS NULL
+    WHERE posts.id IN (
+        SELECT id 
+        FROM posts 
+        WHERE parent_id IS NULL
+    )
     ORDER BY 
         posts.created_at DESC,
-        post_media.order_index DESC
+        post_media.order_index DESC;
 ");
 }
 
@@ -66,7 +66,7 @@ $posts = [];
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $postId = $row['post_id'];
-    
+
     // Initialize post if not exists
     if (!isset($posts[$postId])) {
         $posts[$postId] = [
@@ -79,7 +79,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             'media' => []
         ];
     }
-    
+
     // Add media if exists
     if ($row['media_id']) {
         $posts[$postId]['media'][] = [
@@ -94,11 +94,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 // Convert to indexed array
 $posts = array_values($posts);
 
-/*
-echo("<pre>\n");
-print_r($posts);
-echo("<pre>\n");
-*/
+// echo("<pre>\n");
+// print_r($posts);
+// echo("<pre>\n");
 ?>
 
 <!doctype html>
@@ -154,7 +152,8 @@ echo("<pre>\n");
             <div class="container-fluid">
 
                 <div>
-                    <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas" data-bs-target="#tuittuit-sidebar">
+                    <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas"
+                        data-bs-target="#tuittuit-sidebar">
                         <i class="bi bi-list"></i>
                     </button>
                     <a class="navbar-brand mx-2" href="#">
@@ -165,7 +164,7 @@ echo("<pre>\n");
                 <form class="navbar-nav" method="GET" action="home2.php">
 
                     <!-- search bar -->
-                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="search" value=""/>
+                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="search" value="" />
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
@@ -186,8 +185,8 @@ echo("<pre>\n");
     </header>
     <main>
         <!-- Sidebar -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" style="margin-top: 4.9rem;"
-            id="tuittuit-sidebar">
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+            style="margin-top: 4.9rem;" id="tuittuit-sidebar">
             <div class="tuittuit-sidenav-bg offcanvas-body">
                 <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
                     <!-- Content -->
@@ -195,7 +194,8 @@ echo("<pre>\n");
                     <div>
                         <ul class="nav nav-pills flex-column pt-5">
                             <li class="nav-item">
-                                <a class="nav-link fs-5 active" aria-current="page" href="#"><i class="bi bi-calendar"></i> Recent</a>
+                                <a class="nav-link fs-5 active" aria-current="page" href="#"><i
+                                        class="bi bi-calendar"></i> Recent</a>
                             </li>
                             <li class="nav-item fs-5">
                                 <a class="nav-link" href="#"><i class="bi bi-arrow-up-right-square"></i> Trending</a>
@@ -237,7 +237,7 @@ echo("<pre>\n");
                                 <!-- the texts -->
                                 <textarea id="post-body" class="form-control" name="body" rows="5"
                                     placeholder="What's on your mind?" required></textarea>
-                                    <div id="post-limit" class="form-text">0/300</div>
+                                <div id="post-limit" class="form-text">0/300</div>
                             </div>
 
                             <input type="hidden" id="parentId" name="parent_id" value="0">
@@ -264,25 +264,27 @@ echo("<pre>\n");
             <div class="m-1 container">
                 <div>
                     <?php
-                        foreach($posts as $post){
-                            echo("<div class=\"post-squares\">");
+                    foreach ($posts as $post) {
+                        echo ("<div class=\"post-squares\">");
 
-                            echo("<div>");
-                            echo($post['body']);
-                            echo("</div>");
+                        echo ("<div>");
+                        echo ($post['body']);
+                        echo ("</div>");
 
-                            echo("<div class=\"image-preview-container\">");
-                            foreach($post["media"] as $media){
-                        
-                                echo("<img src=\"".$media['file_url']."\" alt=\"\" class=\"image-preview\">");
-                                
+                        if (!empty($post["media"])) {
+                            echo ("<div class=\"image-preview-container\">");
+                            foreach ($post["media"] as $media) {
+
+                                echo ("<img src=\"" . $media['file_url'] . "\" alt=\"\" class=\"image-preview\">");
+
                             }
-                            echo("</div>");
-
-                            echo("</div>");
+                            echo ("</div>");
                         }
+
+                        echo ("</div>");
+                    }
                     ?>
-                    
+
                 </div>
 
             </div>
