@@ -8,7 +8,7 @@ $username = $_SESSION['user_id'];
 include_once('config/db.php');
 
 $search = $_GET['search'];
-$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
+//$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 
 if (!empty($search)) {
     $stmt = $pdo->prepare("
@@ -117,6 +117,8 @@ echo("<pre>\n");
     <!-- Bootstrap Icons v1.31.1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+    <!-- Home CSS -->
+    <link rel="stylesheet" href="home2.css">
     <!-- TuitTuit CSS -->
     <link rel="stylesheet" href="public/css/tuituit.css">
 </head>
@@ -233,9 +235,9 @@ echo("<pre>\n");
                         <form id="postUploadForm" method="POST" action="actions/post_action.php">
                             <div class="mb-3">
                                 <!-- the texts -->
-                                <textarea class="form-control" name="body" rows="5"
+                                <textarea id="post-body" class="form-control" name="body" rows="5"
                                     placeholder="What's on your mind?" required></textarea>
-                                    <div class="form-text">0/300</div>
+                                    <div id="post-limit" class="form-text">0/300</div>
                             </div>
 
                             <input type="hidden" id="parentId" name="parent_id" value="0">

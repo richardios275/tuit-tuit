@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = $_POST['body'];
 
-    $pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
+    //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
     $sql="
         INSERT INTO `posts` 
         (
@@ -36,9 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         "
         ;
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':body' => $_POST['body'],
-        ':user_id' => $_SESSION['user_id']));
-    echo("post added!");
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':body' => $_POST['body'],
+            ':user_id' => $_SESSION['user_id']));
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
+    catch (PDOException $e) {
+        echo ''. $e->getMessage() .'';
+    }
 }

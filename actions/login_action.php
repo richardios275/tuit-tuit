@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Fetch user from DB
-    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
+    //$pdo = new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ../index.php');
         exit;
     } else {
-        header('Location: ../login.php?error=1');
+        header('Location: ../login?error=1');
         exit;
     }
 } else {
-    header('Location: ../login.php');
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
 }
 

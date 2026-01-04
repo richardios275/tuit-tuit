@@ -2,8 +2,8 @@
 
 $host = "localhost:3306";
 $db = "tuituit";
-$user = "server";
-$pass = "12345678";
+$user = "root";
+$pass = "";
 
 $dsn = "mysql:host=$host;dbname=$db";
 
