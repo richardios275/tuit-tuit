@@ -7,11 +7,14 @@ $username = $_SESSION['user_id'];
 
 include_once('config/db.php');
 
-$search = $_GET['search'];
+$search="";
+if(isset($_GET['search'])){
+    $search = $_GET['search'];
+}
+
 //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 
-if (!empty($search)) {
-    $stmt = $pdo->prepare("
+$stmt = $pdo->prepare("
     SELECT 
     posts.id as post_id,
     posts.parent_id,
@@ -35,32 +38,7 @@ if (!empty($search)) {
         posts.created_at DESC,
         post_media.order_index DESC;
     ");
-    $stmt->execute([':search' => '%' . $search . '%']);
-} else {
-    $stmt = $pdo->query("
-    SELECT 
-    posts.id as post_id,
-    posts.parent_id,
-    posts.body,
-    posts.user_username,
-    posts.status,
-    posts.created_at,
-    post_media.id as media_id,
-    post_media.file_url,
-    post_media.media_type,
-    post_media.order_index
-    FROM posts
-    LEFT JOIN post_media ON posts.id = post_media.post_id
-    WHERE posts.id IN (
-        SELECT id 
-        FROM posts 
-        WHERE parent_id IS NULL
-    )
-    ORDER BY 
-        posts.created_at DESC,
-        post_media.order_index DESC;
-");
-}
+$stmt->execute([':search' => '%' . $search . '%']);
 
 $posts = [];
 
