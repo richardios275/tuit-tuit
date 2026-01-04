@@ -75,6 +75,8 @@ $posts = array_values($posts);
 // echo("<pre>\n");
 // print_r($posts);
 // echo("<pre>\n");
+
+$test_id=1;
 ?>
 
 <!doctype html>
@@ -190,7 +192,10 @@ $posts = array_values($posts);
                             <image class="me-2 rounded-circle" id="userIcon" src="public/images/default_user.jpg"
                                 style="width: 40px; height: 40px;"></image>
                             <h6 class="d-inline-block text-truncate fw-semibold mb-0" id="userName">
-                                OnlyTwentyCharacters
+                                <?php
+
+                                echo($_SESSION['user_id'])
+                                ?>
                             </h6>
                         </div>
                     </div>
@@ -241,9 +246,23 @@ $posts = array_values($posts);
             <!-- Post area -->
             <div class="m-1 container">
                 <div>
+                    <div class="post-squares">
+                        
+                        <button onclick="testing('7','update')">update</button>
+                        <button onclick="testing('7','delete')">delete</button>
+                        
+            
+
+                        testing text...
+                    </div>
                     <?php
                     foreach ($posts as $post) {
                         echo ("<div class=\"post-squares\">");
+
+                        if($post['user_username']==$_SESSION['user_id']){
+                            echo("<button onclick=\"testing('7','update')\">update</button>");
+                            echo("<button onclick=\"testing('7','delete')\">delete</button>");
+                        }
 
                         echo ("<div>");
                         echo ($post['body']);
@@ -285,6 +304,27 @@ $posts = array_values($posts);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 </body>
+
+<script>
+
+    function testing(id,action) {
+      $.ajax({
+           type: "POST",
+           url: 'actions/'+action+'_action.php',
+           data: {input:id},
+           success: function(result){
+            alert(result)
+           }
+           
+
+      });
+      location.reload()
+    }
+ 
+</script>
 
 </html>
