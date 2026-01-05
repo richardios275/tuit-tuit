@@ -13,7 +13,6 @@ if (isset($_GET['search'])) {
 }
 
 //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
-
 $stmt = $pdo->prepare("
     SELECT 
     posts.id as post_id,

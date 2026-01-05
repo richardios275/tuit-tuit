@@ -1,8 +1,12 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-            style="margin-top: 3.35rem;" id="tuittuit-sidebar">
+             id="tuittuit-sidebar">
             <div class="tuittuit-sidenav-bg offcanvas-body">
                 <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
                     <!-- Content -->
+                     <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas"
+                        data-bs-target="#tuittuit-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
                     <div>
                         <ul class="nav nav-pills flex-column pt-5">
                             <li class="nav-item">
