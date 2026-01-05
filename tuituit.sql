@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 20, 2025 at 04:34 AM
+-- Generation Time: Jan 05, 2026 at 06:54 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -77,7 +77,11 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `parent_id`, `body`, `user_username`, `status`, `created_at`) VALUES
 (1, NULL, 'Hello, this is a test, a test is a test, and testing is a test.\r\n\r\nI love hamburger.', 'lacticmilk', 'online', '2025-12-20 04:16:05'),
-(2, NULL, 'Tes beberapa gambar dengan aspect ratio berbeda', 'vespin_p', 'online', '2025-12-20 04:23:38');
+(2, NULL, 'Tes beberapa gambar dengan aspect ratio berbeda', 'vespin_p', 'online', '2025-12-20 04:23:38'),
+(3, NULL, 'SKIBIDI TOILET', 'yeshunguang', 'online', '2026-01-04 04:50:50'),
+(4, NULL, 'SIGMA', 'yeshunguang', 'online', '2026-01-04 04:52:35'),
+(5, NULL, 'YOU\'RE SO SKIBIDI', 'yeshunguang', 'online', '2026-01-04 04:52:53'),
+(6, NULL, 'Testing post again cause yes', 'lacticmilk', 'online', '2026-01-05 16:10:53');
 
 -- --------------------------------------------------------
 
@@ -109,11 +113,11 @@ CREATE TABLE `post_media` (
 --
 
 INSERT INTO `post_media` (`id`, `post_id`, `file_url`, `media_type`, `order_index`) VALUES
-(1, 1, 'public/uploads/posts/hamburger.jpg', 'IMAGE', 0),
-(2, 2, 'public/uploads/posts/smolpc.png', 'IMAGE', 3),
-(3, 2, 'public/uploads/posts/mc.png', 'IMAGE', 2),
-(4, 2, 'public/uploads/posts/scissors.png', 'IMAGE', 1),
-(5, 2, 'public/uploads/posts/vivian.jpg', 'IMAGE', 0);
+(1, 1, '/public/uploads/posts/hamburger.jpg', 'IMAGE', 0),
+(2, 2, '/public/uploads/posts/smolpc.png', 'IMAGE', 3),
+(3, 2, '/public/uploads/posts/mc.png', 'IMAGE', 2),
+(4, 2, '/public/uploads/posts/scissors.png', 'IMAGE', 1),
+(5, 2, '/public/uploads/posts/vivian.jpg', 'IMAGE', 0);
 
 -- --------------------------------------------------------
 
@@ -127,16 +131,18 @@ CREATE TABLE `users` (
   `bio` text,
   `profile_pic` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL COMMENT 'Hashed in PHP',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `pronouns` varchar(40) DEFAULT NULL COMMENT 'Very important feature'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`username`, `displayname`, `bio`, `profile_pic`, `password`, `created_at`) VALUES
-('lacticmilk', 'Kayla v Bridget', NULL, NULL, '$2y$10$.asuE.Ka1u2MJ3rgUoto5eNV4bhAFtRvxz9rsljTfIBSkZkUToIUi', '2025-10-20 15:33:55'),
-('vespin_p', 'Andy', NULL, NULL, '$2y$10$0w5vUyWkAUOXAvmBc.M7FOQ3aU.UpNWiU7gKNvgPLH4dIBxdooQku', '2025-12-20 04:22:18');
+INSERT INTO `users` (`username`, `displayname`, `bio`, `profile_pic`, `password`, `created_at`, `pronouns`) VALUES
+('lacticmilk', 'Kayla v Bridget', NULL, NULL, '$2y$10$.asuE.Ka1u2MJ3rgUoto5eNV4bhAFtRvxz9rsljTfIBSkZkUToIUi', '2025-10-20 15:33:55', NULL),
+('vespin_p', 'Andy', NULL, NULL, '$2y$10$0w5vUyWkAUOXAvmBc.M7FOQ3aU.UpNWiU7gKNvgPLH4dIBxdooQku', '2025-12-20 04:22:18', NULL),
+('yeshunguang', NULL, NULL, NULL, '$2y$10$sSWoeKyKFP.HGMCbf.otgOI3Yh/6ZvnphJGnykpK5NVTupHsiSZsi', '2025-12-29 11:05:30', NULL);
 
 --
 -- Indexes for dumped tables
@@ -205,13 +211,13 @@ ALTER TABLE `hashtags`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `post_media`
 --
 ALTER TABLE `post_media`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
