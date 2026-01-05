@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['input'];
 
-    //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
+    $pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
     $sql="
         DELETE FROM `posts` WHERE id= :id
         "

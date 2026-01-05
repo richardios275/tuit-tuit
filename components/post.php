@@ -40,8 +40,8 @@
 
     if ($post['user_username'] == $_SESSION['user_id']) {
         echo ("<div style=\"margin-top: 10px;\">");
-        echo ("<button class=\"btn btn-primary me-2\" onclick=\"testing('" . $post['id'] . "','update')\">update</button>");
-        echo ("<button class=\"btn btn-primary\" onclick=\"testing('" . $post['id'] . "','delete')\">delete</button>");
+        echo ("<button class=\"btn btn-primary me-2\" onclick=\"update_post('" . $post['id'] . "')\">update</button>");
+        echo ("<button class=\"btn btn-primary\" onclick=\"delete_post('" . $post['id'] . "')\">delete</button>");
         echo ("</div>");
     }
     ?>

@@ -128,12 +128,23 @@ $posts = array_values($posts);
 
 <script>
 
-    function testing(id, action) {
+    function delete_post(id) {
+
         $.ajax({
             type: "POST",
-            url: 'actions/' + action + '_action.php',
+            url: 'actions/delete_action.php',
             data: { input: id },
 
+        });
+        alert("your post has been deleted.")
+        location.reload()
+    }
+    function update_post(id) {
+
+        $.ajax({
+            type: "POST",
+            url: 'actions/delete_action.php',
+            data: { input: id },
 
         });
         alert("your post has been deleted.")
