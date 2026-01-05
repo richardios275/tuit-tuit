@@ -73,7 +73,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
                     <div class="row mb-5">
                         <label for="bioInput" class="col-sm-2 col-form-label">Bio</label>
                         <div class="col-sm-6">
-                            <textarea type="text" class="form-control" name="bioInput" rows="3" value="<?php echo(htmlspecialchars($user['bio'])); ?>"></textarea>
+                            <textarea type="text" class="form-control" name="bioInput" rows="3" ><?php echo(htmlspecialchars($user['bio'])); ?></textarea>
                         </div>
                     </div>
                     <div>
