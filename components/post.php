@@ -24,8 +24,8 @@
 </style>
 
 <div class="post-squares">
-    <h5><?php echo $post['user_username']; ?></h5>
-    <div><?php echo $post['body']; ?></div>
+    <h5><?php echo htmlspecialchars($post['user_username']); ?></h5>
+    <div><?php echo htmlspecialchars($post['body']); ?></div>
 
     <?php
     if (!empty($post["media"])) {
