@@ -1,4 +1,4 @@
-- [English]()
+- [English](/README_en.md)
 
 ### Tuit Tuit
 Pengganti twitter very minimal
