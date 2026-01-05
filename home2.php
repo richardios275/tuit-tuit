@@ -77,57 +77,11 @@ $posts = array_values($posts);
 // echo("</pre>\n");
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <title>Home | Tuit Tuit</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <!-- Bootstrap CSS v5.3.2 -->
-    <link rel="stylesheet" href="public/css/bootstrap.css">
-
-
-    <!-- Bootstrap Icons v1.31.1 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <!-- Home CSS -->
-    <link rel="stylesheet" href="home2.css">
-    <!-- TuitTuit CSS -->
-    <link rel="stylesheet" href="public/css/tuituit.css">
-</head>
-
-<style>
-    .post-squares {
-        height: fit-content;
-        margin: 20px;
-        padding: 10px;
-        background-color: white;
-        box-sizing: border-box;
-    }
-
-    .image-preview {
-        height: 200px;
-        margin: 10px;
-
-    }
-
-    .image-preview-container {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
-        contain: size;
-        height: 235px;
-        margin-top: 10px;
-    }
-</style>
+<?php $title="Home"; include('components/main_header.php'); ?>
 
 <body>
     <header>
         <?php include("components/navbar.php") ?>
-
     </header>
     <main>
         <!-- Sidebar -->
@@ -140,54 +94,9 @@ $posts = array_values($posts);
             <!-- Post area -->
             <div class="m-1 container">
                 <div>
-                    <div class="post-squares">
-
-
-                        <h5>
-                            <?php
-                            echo ($_SESSION['user_id']);
-                            ?>
-                        </h5>
-
-
-                        <p style="margin-bottom: 20px;">testing text</p>
-
-                        <button onclick="testing('67','update')" style="margin-right: 10px;">update</button>
-                        <button onclick="testing('67','delete')">delete</button> <br>
-
-                    </div>
                     <?php
                     foreach ($posts as $post) {
-                        echo ("<div class=\"post-squares\">");
-
-                        echo ("
-                        <h5>" .
-                            $post['user_username']
-                            . "</h5>
-                        ");
-
-                        echo ("<div>");
-                        echo ($post['body']);
-                        echo ("</div>");
-
-                        if (!empty($post["media"])) {
-                            echo ("<div class=\"image-preview-container\">");
-                            foreach ($post["media"] as $media) {
-
-                                echo ("<img src=\"" . $media['file_url'] . "\" alt=\"\" class=\"image-preview\">");
-
-                            }
-                            echo ("</div>");
-                        }
-
-                        if ($post['user_username'] == $_SESSION['user_id']) {
-                            echo ("<div style=\"margin-top: 10px;\">");
-                            echo ("<button onclick=\"testing('" . $post['id'] . "','update')\" style=\"margin-right: 10px;\">update</button>");
-                            echo ("<button onclick=\"testing('" . $post['id'] . "','delete')\">delete</button>");
-                            echo ("</div>");
-                        }
-
-                        echo ("</div>");
+                        include('components/post.php');
                     }
                     ?>
 
