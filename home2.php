@@ -143,12 +143,15 @@ $posts = array_values($posts);
 
         $.ajax({
             type: "POST",
-            url: 'actions/delete_action.php',
+            url: 'actions/update_action.php',
             data: { input: id },
-
+            success: function (data) {
+            $("#updateModal").modal('show');
+            $("#post-body").html(data); //Add this line
+            }
         });
-        alert("your post has been deleted.")
-        location.reload()
+        alert("your post has been updated.")
+        
     }
 
 </script>
