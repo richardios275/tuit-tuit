@@ -121,8 +121,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
 
 <?php 
     include($_SERVER['DOCUMENT_ROOT'] . '/actions/update_profile_action.php');
-    echo("<br>");
-    echo(htmlspecialchars($user['bio']));
+    
 ?>
 
 </html>

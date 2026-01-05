@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/db.php';
 
 if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
@@ -7,11 +6,6 @@ if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
     exit();
 }
 
-echo($_POST['displayNameInput'].'-');
-echo($_POST['pronounsInput'].'-');
-echo($_POST['bioInput'].'-');
-echo($_POST['oldPasswordInput'].'-');
-echo($_POST['newPasswordInput'].'-');
 if (password_verify($_POST['oldPasswordInput'], $user['password'])) {
     $stmt = $pdo->prepare("UPDATE `users` 
                             SET 
@@ -25,5 +19,12 @@ if (password_verify($_POST['oldPasswordInput'], $user['password'])) {
 } else {
     echo("old password does not match");
 }
+
+unset($_POST['displayNameInput']);
+unset($_POST['pronounsInput']);
+unset($_POST['bioInput']);  
+unset($_POST['oldPasswordInput']);
+unset($_POST['newPasswordInput']);
+
 
 ?>
