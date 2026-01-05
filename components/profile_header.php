@@ -8,26 +8,11 @@
         border-radius: 10px;
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     }
-
-    .profile-frame {
-        width: 60px;
-        height: 60px;
-        border-radius: 100%;
-        overflow: hidden;
-    }
-
-    .profile-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 </style>
 
 <div class="header-body p-4 d-flex flex-row justify-content-between">
     <div class="d-flex flex-row">
-        <div class="profile-frame me-3">
-            <image class="profile-image" id="userIcon" src="/public/images/default_user.jpg"</image></image>
-        </div>
+        <?php $iconSize = 60; $iconSource = "/public/images/default_user.jpg"; $iconClass = "me-3"; include $_SERVER['DOCUMENT_ROOT'] . '/components/profile_icon.php';?>
         
         <div class="d-flex flex-column justify-content-center">
             <?php
@@ -43,6 +28,8 @@
         <button class="btn btn-primary">Follow</button>
     </div>
     <div class="d-flex flex-row mt-3 <?php if ($username != $profile_username) {echo 'd-none';}?>">
-        <button class="btn btn-primary">Settings</button>
+        <a href="/settings">
+            <button class="btn btn-primary">Settings</button>
+        </a>
     </div>
 </div>
