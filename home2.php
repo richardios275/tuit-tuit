@@ -72,9 +72,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 // Convert to indexed array
 $posts = array_values($posts);
 
-// echo("<pre>\n");
-// print_r($posts);
-// echo("<pre>\n");
+echo("<pre>\n");
+print_r($posts);
+echo("</pre>\n");
 
 $test_id=1;
 ?>
@@ -248,21 +248,29 @@ $test_id=1;
                 <div>
                     <div class="post-squares">
                         
-                        <button onclick="testing('7','update')">update</button>
-                        <button onclick="testing('7','delete')">delete</button>
                         
+                        <h5>
+                            <?php
+                            echo($_SESSION['user_id']);
+                            ?>
+                        </h5>
             
 
-                        testing text...
+                        <p style="margin-bottom: 20px;">testing text</p>
+                        
+                        <button onclick="testing('67','update')" style="margin-right: 10px;">update</button>
+                        <button onclick="testing('67','delete')">delete</button> <br>
+                        
                     </div>
                     <?php
                     foreach ($posts as $post) {
                         echo ("<div class=\"post-squares\">");
 
-                        if($post['user_username']==$_SESSION['user_id']){
-                            echo("<button onclick=\"testing('7','update')\">update</button>");
-                            echo("<button onclick=\"testing('7','delete')\">delete</button>");
-                        }
+                        echo("
+                        <h5>".
+                            $post['user_username']
+                        ."</h5>
+                        ");
 
                         echo ("<div>");
                         echo ($post['body']);
@@ -278,6 +286,13 @@ $test_id=1;
                             echo ("</div>");
                         }
 
+                        if($post['user_username']==$_SESSION['user_id']){
+                            echo("<div style=\"margin-top: 10px;\">");
+                            echo("<button onclick=\"testing('".$post['id']."','update')\" style=\"margin-right: 10px;\">update</button>");
+                            echo("<button onclick=\"testing('".$post['id']."','delete')\">delete</button>");
+                            echo("</div>");
+                        }
+                        
                         echo ("</div>");
                     }
                     ?>
@@ -316,12 +331,10 @@ $test_id=1;
            type: "POST",
            url: 'actions/'+action+'_action.php',
            data: {input:id},
-           success: function(result){
-            alert(result)
-           }
            
 
       });
+      alert("your post has been deleted.")
       location.reload()
     }
  
