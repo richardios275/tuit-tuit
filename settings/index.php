@@ -16,9 +16,13 @@ if (isset($_GET['search'])) {
 //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 
 // Get the user's info
-$stmt = $pdo->prepare("SELECT username, displayname, bio, profile_pic, created_at, pronouns FROM users WHERE username = ?");
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
 $stmt->execute([$username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo("<pre>\n");
+print_r($user); 
+echo("</pre>\n");
 ?>
 
 <?php $title = "Settings";
@@ -39,7 +43,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
             <!-- Post area -->
             <div class="m-1 container">
                 <h2 class="fw-semibold">Settings</h2>
-                <form class="mb-3">
+                <form class="mb-3" method="post">
                     <div class="mb-3">
                         <label class="form-label">Profile Icon</label>
                         <div class="row">
@@ -57,19 +61,19 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
                     <div class="row mb-3">
                         <label for="displayNameInput" class="col-sm-2 col-form-label">Display Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="displayNameInput">
+                            <input type="text" class="form-control" name="displayNameInput" value="<?php echo($user['displayname']); ?>">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="pronounsInput" class="col-sm-2 col-form-label">Pronouns</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="pronounsInput">
+                            <input type="text" class="form-control" name="pronounsInput" value="<?php echo($user['pronouns']); ?>">
                         </div>
                     </div>
                     <div class="row mb-5">
                         <label for="bioInput" class="col-sm-2 col-form-label">Bio</label>
                         <div class="col-sm-6">
-                            <textarea type="text" class="form-control" id="displayNameInput" rows="3"></textarea>
+                            <textarea type="text" class="form-control" name="bioInput" rows="3" value="<?php echo(htmlspecialchars($user['bio'])); ?>"></textarea>
                         </div>
                     </div>
                     <div>
@@ -77,13 +81,13 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
                         <div class="row mb-3">
                             <label for="oldPasswordInput" class="col-sm-2 col-form-label">Old Password</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" id="oldPasswordInput">
+                                <input type="password" class="form-control" name="oldPasswordInput">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="newPasswordInput" class="col-sm-2 col-form-label">New Password</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" id="newPasswordInput">
+                                <input type="password" class="form-control" name="newPasswordInput">
                             </div>
                         </div>
                     </div>
@@ -115,20 +119,10 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
 
 </body>
 
-<script>
-
-    function testing(id, action) {
-        $.ajax({
-            type: "POST",
-            url: 'actions/' + action + '_action.php',
-            data: { input: id },
-
-
-        });
-        alert("your post has been deleted.")
-        location.reload()
-    }
-
-</script>
+<?php 
+    include($_SERVER['DOCUMENT_ROOT'] . '/actions/update_profile_action.php');
+    echo("<br>");
+    echo(htmlspecialchars($user['bio']));
+?>
 
 </html>

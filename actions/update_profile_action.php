@@ -2,72 +2,28 @@
 session_start();
 require_once '../config/db.php';
 
-function isValidUsername(string $username): bool
-{
-    return preg_match('/^[a-zA-Z0-9_-]{3,20}$/', $username) === 1;
+if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
+    header("Location: ../login");
+    exit();
 }
 
-function isStrongPassword(string $password): bool
-{
-    return preg_match('/^(?=.*[A-Z])(?=.*[0-9\W]).{8,}$/', $password) === 1;
-}
-
-// Temp
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    unset($_SESSION['regist_errors']);
-
-    $errors = [] ;
-
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Validation
-    if (!isValidUsername($username)) {
-        $errors[] = 'Username must be at least 3 characters long and cannot contain special characters';
-    }
-
-    if (!isStrongPassword($password)) {
-        $errors[] = 'Password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number or special character';
-    }
-
-    if (empty($errors)) {
-        try {
-            $stmt = $pdo->prepare("SELECT username FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            if ($stmt->rowCount() > 0) {
-                $errors[] = "Username already exists.";
-            }
-        } catch (PDOException $e) {
-            $errors[] = "Server error: " . $e->getMessage();
-        }
-    }
-
-    if (empty($errors)) {
-        try {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare(query: "INSERT INTO users (username, password) VALUES (?, ?);");
-            $stmt->execute([$username, $hashed_password]);
-
-            // Setup session and redirect
-            $_SESSION['user_id'] = $username;
-            $_SESSION['logged_in'] = true;
-            header("Location: ../home2.php");
-            exit();
-
-        } catch (PDOException $e) {
-            $errors[] = "Server error: " . $e->getMessage();
-        }
-    }
-
-    if (!empty($errors)) {
-        $_SESSION['regist_errors'] = $errors;
-        header('Location: ../register');
-        exit();
-    }
-
+echo($_POST['displayNameInput'].'-');
+echo($_POST['pronounsInput'].'-');
+echo($_POST['bioInput'].'-');
+echo($_POST['oldPasswordInput'].'-');
+echo($_POST['newPasswordInput'].'-');
+if (password_verify($_POST['oldPasswordInput'], $user['password'])) {
+    $stmt = $pdo->prepare("UPDATE `users` 
+                            SET 
+                            displayname='".$_POST['displayNameInput']."',
+                            pronouns='".$_POST['pronounsInput']."',
+                            bio='".$_POST['bioInput']."',
+                            password='".password_hash($_POST['newPasswordInput'], PASSWORD_DEFAULT)."'
+                        
+                            WHERE username=?");
+    $stmt->execute([$username]);
 } else {
-    header('Location: ../register');
-    exit;
+    echo("old password does not match");
 }
 
 ?>
