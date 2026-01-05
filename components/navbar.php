@@ -7,7 +7,7 @@
                 <i class="bi bi-list"></i>
             </button>
             <a class="navbar-brand mx-2" href="#">
-                <img src="public/svg/logo.svg" alt="Tuit Tuit" height="30" background-color="">
+                <img src="/public/svg/logo.svg" alt="Tuit Tuit" height="30" background-color="">
             </a>
         </div>
 

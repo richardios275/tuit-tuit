@@ -5,6 +5,8 @@
         padding: 10px;
         background-color: white;
         box-sizing: border-box;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     }
 
     .image-preview {

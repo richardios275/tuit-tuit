@@ -21,7 +21,7 @@
                     <div>
                         <div class="w-90 mb-2 tuittuit-sidenav-fg" style="height: 2px;"></div>
                         <div class="container d-flex flex-row align-items-center">
-                            <image class="me-2 rounded-circle" id="userIcon" src="public/images/default_user.jpg"
+                            <image class="me-2 rounded-circle" id="userIcon" src="/public/images/default_user.jpg"
                                 style="width: 40px; height: 40px;"></image>
                             <h6 class="d-inline-block text-truncate fw-semibold mb-0" id="userName">
                                 <?php
@@ -30,7 +30,7 @@
                             </h6>
                             <ul class="nav flex-row">
                                 <li class="nav-item">
-                                    <a href=<?php echo "profile/" . $_SESSION['user_id']; ?> class="nav-link"><i
+                                    <a href=<?php echo "/profile/" . $_SESSION['user_id']; ?> class="nav-link fs-3 fw-bold text-decoration-none"><i
                                             class="bi bi-person"></i></a>
                                 </li>
                             </ul>

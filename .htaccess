@@ -1,4 +1,4 @@
 RewriteEngine On
 
 # Rewrite for users
-RewriteRule ^profile/([a-zA-Z0-9_-]+)/?$ profile/index.php?userid=$1 [L,QSA]
+RewriteRule ^profile/([a-zA-Z0-9_-]+)/?$ profile?username=$1 [L,QSA]
