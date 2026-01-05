@@ -1,5 +1,23 @@
 console.log("UMA MUSUME");
 
+// [[ Post AJAX ]]
+function refreshPosts(query) {
+  let postAPI = 'api/get_posts.php';
+  if (query != null) {
+    postAPI = `api/get_posts.php?query=${query}`;
+  }
+
+  fetch(postAPI)
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Response failure')
+    }
+  })
+  .then(data)
+}
+
 // [[ Upload modal ]]
 const uploadModal = document.getElementById("uploadModal");
 const postBody = document.getElementById("post-body");
@@ -30,7 +48,14 @@ function showLimitFeedback() {
       }, 500);
 }
 
-postBody.addEventListener("input", (e) => {
+// This is to handle Firefox bs
+postBody.addEventListener("input", postBodyEvent);
+postBody.addEventListener("keyup", postBodyEvent);
+postBody.addEventListener("change", postBodyEvent);
+postBody.addEventListener("paste", postBodyEvent);
+postBody.addEventListener("cut", postBodyEvent);
+
+function postBodyEvent(e) {
   newBody = e.target.value
   bodyLength = countCharacters(newBody);
 
@@ -53,4 +78,4 @@ postBody.addEventListener("input", (e) => {
   }
 
   postLimit.innerHTML = Math.min(bodyLength, 300) + "/" + textLimit;
-});
+}

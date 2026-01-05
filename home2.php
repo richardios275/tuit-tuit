@@ -1,14 +1,14 @@
 <?php
 session_start();
 if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
-    header("Location: login.php");
+    header("Location: login");
 }
 $username = $_SESSION['user_id'];
 
 include_once('config/db.php');
 
-$search="";
-if(isset($_GET['search'])){
+$search = "";
+if (isset($_GET['search'])) {
     $search = $_GET['search'];
 }
 
@@ -128,139 +128,35 @@ $test_id=1;
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" tabindex="-1">
-            <div class="container-fluid">
-
-                <div>
-                    <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="offcanvas"
-                        data-bs-target="#tuittuit-sidebar">
-                        <i class="bi bi-list"></i>
-                    </button>
-                    <a class="navbar-brand mx-2" href="#">
-                        <img src="public/svg/logo.svg" alt="Tuit Tuit" height="30" background-color="">
-                    </a>
-                </div>
-
-                <form class="navbar-nav" method="GET" action="home2.php">
-
-                    <!-- search bar -->
-                    <input class="form-control me-sm-2" type="text" placeholder="Search" name="search" value="" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-
-                </form>
-                <div class="navbar-nav">
-                    <form class="d-flex my-2 my-lg-0">
-                        <!-- Post button -->
-                        <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal"
-                            data-bs-target="#uploadModal">
-                            Post
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
+        <?php include("components/navbar.php") ?>
 
     </header>
     <main>
         <!-- Sidebar -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-            style="margin-top: 4.9rem;" id="tuittuit-sidebar">
-            <div class="tuittuit-sidenav-bg offcanvas-body">
-                <div class="d-flex flex-column flex-shrink-0 justify-content-between h-100">
-                    <!-- Content -->
+        <?php include('components/sidebar.php') ?>
 
-                    <div>
-                        <ul class="nav nav-pills flex-column pt-5">
-                            <li class="nav-item">
-                                <a class="nav-link fs-5 active" aria-current="page" href="#"><i
-                                        class="bi bi-calendar"></i> Recent</a>
-                            </li>
-                            <li class="nav-item fs-5">
-                                <a class="nav-link" href="#"><i class="bi bi-arrow-up-right-square"></i> Trending</a>
-                            </li>
-                            <li class="nav-item fs-5">
-                                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- User -->
-                    <div>
-                        <div class="w-90 mb-2 tuittuit-sidenav-fg" style="height: 2px;"></div>
-                        <div class="container d-flex flex-row align-items-center">
-                            <image class="me-2 rounded-circle" id="userIcon" src="public/images/default_user.jpg"
-                                style="width: 40px; height: 40px;"></image>
-                            <h6 class="d-inline-block text-truncate fw-semibold mb-0" id="userName">
-                                <?php
-
-                                echo($_SESSION['user_id'])
-                                ?>
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
         <!-- Upload modal -->
-        <div class="modal fade" id="uploadModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitleId">
-                            Post
-                        </h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="postUploadForm" method="POST" action="actions/post_action.php">
-                            <div class="mb-3">
-                                <!-- the texts -->
-                                <textarea id="post-body" class="form-control" name="body" rows="5"
-                                    placeholder="What's on your mind?" required></textarea>
-                                <div id="post-limit" class="form-text">0/300</div>
-                            </div>
-
-                            <input type="hidden" id="parentId" name="parent_id" value="0">
-
-                            <input type="hidden" id="postStatus" name="status" value="active">
-                            <!-- the image -->
-                            <div class="mb-3">
-                                <label for="postImage" class="form-label">Add Image (Not working)</label>
-                                <input class="form-control" type="file" id="postImage" name="image" accept="image/*">
-                                <div class="form-text">Max file size: 5MB</div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" form="postUploadForm" class="btn btn-primary">Post</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php include('components/modals/upload.php') ?>
 
         <section class="d-flex justify-content-center">
             <!-- Post area -->
             <div class="m-1 container">
                 <div>
                     <div class="post-squares">
-                        
-                        
+
+
                         <h5>
                             <?php
-                            echo($_SESSION['user_id']);
+                            echo ($_SESSION['user_id']);
                             ?>
                         </h5>
-            
+
 
                         <p style="margin-bottom: 20px;">testing text</p>
-                        
+
                         <button onclick="testing('67','update')" style="margin-right: 10px;">update</button>
                         <button onclick="testing('67','delete')">delete</button> <br>
-                        
+
                     </div>
                     <?php
                     foreach ($posts as $post) {
@@ -286,13 +182,13 @@ $test_id=1;
                             echo ("</div>");
                         }
 
-                        if($post['user_username']==$_SESSION['user_id']){
-                            echo("<div style=\"margin-top: 10px;\">");
-                            echo("<button onclick=\"testing('".$post['id']."','update')\" style=\"margin-right: 10px;\">update</button>");
-                            echo("<button onclick=\"testing('".$post['id']."','delete')\">delete</button>");
-                            echo("</div>");
+                        if ($post['user_username'] == $_SESSION['user_id']) {
+                            echo ("<div style=\"margin-top: 10px;\">");
+                            echo ("<button onclick=\"testing('" . $post['id'] . "','update')\" style=\"margin-right: 10px;\">update</button>");
+                            echo ("<button onclick=\"testing('" . $post['id'] . "','delete')\">delete</button>");
+                            echo ("</div>");
                         }
-                        
+
                         echo ("</div>");
                     }
                     ?>
@@ -326,18 +222,18 @@ $test_id=1;
 
 <script>
 
-    function testing(id,action) {
-      $.ajax({
-           type: "POST",
-           url: 'actions/'+action+'_action.php',
-           data: {input:id},
-           
+    function testing(id, action) {
+        $.ajax({
+            type: "POST",
+            url: 'actions/' + action + '_action.php',
+            data: { input: id },
 
-      });
-      alert("your post has been deleted.")
-      location.reload()
+
+        });
+        alert("your post has been deleted.")
+        location.reload()
     }
- 
+
 </script>
 
 </html>
