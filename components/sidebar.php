@@ -17,6 +17,9 @@
                                 <a class="nav-link" href="#"><i class="bi bi-arrow-up-right-square"></i> Trending</a>
                             </li>
                             <li class="nav-item fs-5">
+                                <a class="nav-link" href="/following"><i class="bi bi-people"></i> Following</a>
+                            </li>
+                            <li class="nav-item fs-5">
                                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                             </li>
                         </ul>

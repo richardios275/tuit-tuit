@@ -48,7 +48,7 @@ $followers = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
             <div class="row">
                 <div class="col">
                     <h6>Followers</h6>
-                    <h6 class="fw-bold"><?php echo $followers; ?></h6>
+                    <h6 id="followerCount" class="fw-bold"><?php echo $followers; ?></h6>
                 </div>
                 <div class="col">
                     <h6>Following</h6>
@@ -59,8 +59,8 @@ $followers = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
     </div>
     <div class="d-flex flex-row mt-3 align-items-end <?php if ($username == $profile_username) {echo 'd-none';}?>">
         <div>
-            <button class="btn btn-primary">Follow</button>
-            </div>
+            <button id="followButton" class="btn btn-primary" onclick="onFollowAction('<?php echo $profile_username; ?>')">Follow</button>
+        </div>
         
     </div>
     <div class="d-flex flex-row mt-3 align-items-end <?php if ($username != $profile_username) {echo 'd-none';}?>">
@@ -69,3 +69,28 @@ $followers = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
         </a>
     </div>
 </div>
+
+<script>
+    const followButton = document.getElementById("followButton")
+    const followerCount = document.getElementById("followerCount")
+function onFollowAction(username) {
+    followButton.disabled = true;
+    $.ajax({
+            type: "POST",
+            url: '/actions/follow_action.php',
+            data: { id: username },
+            success: function(response) {
+                followButton.disabled = false;
+                if (response == 'followed') {
+                    followButton.innerText = "Unfollow";
+                    followerCount.innerText = Number(followerCount.innerText) + 1;
+                } else {
+                    followButton.innerHTML = "Follow";
+                    followerCount.innerText = Number(followerCount.innerText) - 1;
+                }
+
+                //location.reload();
+            }
+        });
+}
+</script>

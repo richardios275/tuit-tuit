@@ -124,40 +124,4 @@ $posts = array_values($posts);
 
 </body>
 
-<script>
-
-    let targetPost = 0;
-    function onUpdateButtonPressed(postId) {
-        targetPost = postId;
-        console.log(targetPost);
-    }
-
-    function delete_post(id) {
-
-        $.ajax({
-            type: "POST",
-            url: 'actions/delete_action.php',
-            data: { input: id },
-
-        });
-        alert("your post has been deleted.")
-        location.reload()
-    }
-    function update_post(id) {
-
-        $.ajax({
-            type: "POST",
-            url: 'actions/update_action.php',
-            data: { input: id },
-            success: function (data) {
-            $("#updateModal").modal('show');
-            $("#post-body").html(data); //Add this line
-            }
-        });
-        alert("your post has been updated.")
-        
-    }
-
-</script>
-
 </html>

@@ -40,9 +40,25 @@
 
     if ($post['user_username'] == $_SESSION['user_id']) {
         echo ("<div style=\"margin-top: 10px;\">");
-        echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#updateModal\" data-bs-postid=" . $post['id'] . " onclick=\"onUpdateButtonPressed('" . $post['id'] . "')\">update</button>");
+        echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#updateModal\" data-bs-postid=" . $post['id'] . ">update</button>");
         echo ("<button class=\"btn btn-primary\" onclick=\"delete_post('" . $post['id'] . "')\">delete</button>");
         echo ("</div>");
     }
     ?>
 </div>
+
+<script>
+    function delete_post(id) {
+
+        $.ajax({
+            type: "POST",
+            url: 'actions/delete_action.php',
+            data: { input: id },
+            success: function(response) {
+                alert("your post has been deleted.")
+        location.reload()
+            }
+        });
+    }
+
+</script>

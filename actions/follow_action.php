@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../config/db.php';
-echo("<br>");
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -29,11 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ));
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "You are following her";
             $following = true;
-        }
-        else {
-            echo "You are not following her";
         }
         //header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
@@ -76,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        //header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
     else {
