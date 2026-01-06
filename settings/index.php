@@ -20,9 +20,6 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
 $stmt->execute([$username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-echo("<pre>\n");
-print_r($user); 
-echo("</pre>\n");
 ?>
 
 <?php $title = "Settings";
