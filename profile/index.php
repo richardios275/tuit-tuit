@@ -84,11 +84,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 // Convert to indexed array
 $posts = array_values($posts);
-
-$stmt = $pdo->prepare("SELECT count(*) FROM follows WHERE followed_user_username = ?");
-$stmt->execute([$profile_username]);
-$count = $stmt->fetch(PDO::FETCH_ASSOC);
-$followers_count = $count['count(*)'];
 ?>
 
 <?php $title=$profile_username . "'s Profile"; include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>

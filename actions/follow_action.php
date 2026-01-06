@@ -13,6 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $errors = array();
 
+    // Check for stupidity
+    if ($id == $_SESSION['user_id']) {
+        echo ('You stupid');
+        exit();
+    }
+
     // Check if following
     $following = false;
     try {
