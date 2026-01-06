@@ -58,19 +58,22 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
                     <div class="row mb-3">
                         <label for="displayNameInput" class="col-sm-2 col-form-label">Display Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="displayNameInput" value="<?php echo($user['displayname']); ?>">
+                            <input type="text" class="form-control" name="displayNameInput"
+                                value="<?php echo ($user['displayname']); ?>">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="pronounsInput" class="col-sm-2 col-form-label">Pronouns</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="pronounsInput" value="<?php echo($user['pronouns']); ?>">
+                            <input type="text" class="form-control" name="pronounsInput"
+                                value="<?php echo ($user['pronouns']); ?>">
                         </div>
                     </div>
                     <div class="row mb-5">
                         <label for="bioInput" class="col-sm-2 col-form-label">Bio</label>
                         <div class="col-sm-6">
-                            <textarea type="text" class="form-control" name="bioInput" rows="3" ><?php echo(htmlspecialchars($user['bio'])); ?></textarea>
+                            <textarea type="text" class="form-control" name="bioInput"
+                                rows="3"><?php echo (htmlspecialchars($user['bio'])); ?></textarea>
                         </div>
                     </div>
                     <div>
@@ -90,7 +93,10 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
                     </div>
                     <button type="submit" class="btn btn-primary">Apply Changes</button>
                 </form>
-                <button class="btn btn-primary">Logout</button>
+                <a href="/actions/logout_action.php">
+                    <button class="btn btn-primary">Logout</button>
+                </a>
+
             </div>
         </section>
 
@@ -116,9 +122,9 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>
 
 </body>
 
-<?php 
-    include($_SERVER['DOCUMENT_ROOT'] . '/actions/update_profile_action.php');
-    
+<?php
+include($_SERVER['DOCUMENT_ROOT'] . '/actions/update_profile_action.php');
+
 ?>
 
 </html>
