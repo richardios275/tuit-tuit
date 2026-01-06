@@ -87,6 +87,7 @@
                     //likeIcon. = "Unfollow";
                     likeCounter.innerText = Number(likeCounter.innerText) + 1;
                 } else {
+                    likeCounter.innerText = Number(likeCounter.innerText) - 1;
                 }
 
                 //location.reload();
