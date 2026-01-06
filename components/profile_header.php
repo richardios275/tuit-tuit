@@ -13,7 +13,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 // Following
 $stmt = $pdo->prepare("SELECT COUNT(*) AS row_count FROM follows WHERE `followed_user_username` = ?");
 $stmt->execute([$profile_username]);
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $following = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Followers
