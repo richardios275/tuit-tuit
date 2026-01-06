@@ -42,7 +42,7 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <form id="postUploadForm" method="POST" action="/actions/update_action.php">
+                <form id="postUpdateForm" method="POST" action="/actions/update_action.php">
                     <div class="mb-3">
                         <input type="text" class="form-control" id="updatePostIdInput" name="postId">
                     </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" form="postUploadForm" class="btn btn-primary">Post</button>
+                <button type="submit" form="postUpdateForm" class="btn btn-primary">Post</button>
             </div>
         </div>
     </div>
