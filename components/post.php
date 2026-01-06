@@ -26,7 +26,7 @@
 </style>
 
 <div id="post-<?php echo $post["id"] ?>" class="post-squares">
-    <h5><?php echo htmlspecialchars($post['user_username']); ?></h5>
+    <a href="/profile/<?php echo htmlspecialchars($post['user_username']); ?>" class="fs-5 text-decoration-none"><?php echo htmlspecialchars($post['user_username']); ?></a>
     <div id="post-<?php echo $post["id"] ?>-body"><?php echo htmlspecialchars($post['body']); ?></div>
 
     <?php
