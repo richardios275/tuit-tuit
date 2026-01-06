@@ -103,6 +103,8 @@ $followers_count = $count['count(*)'];
 
         <!-- Upload modal -->
         <?php include($_SERVER['DOCUMENT_ROOT'] . '/components/modals/upload.php') ?>
+        <!-- Update modal -->
+        <?php include('components/modals/update.php') ?>
 
         <section class="d-flex justify-content-center">
             <!-- Post area -->
