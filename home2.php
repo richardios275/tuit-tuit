@@ -88,6 +88,8 @@ $posts = array_values($posts);
 
         <!-- Upload modal -->
         <?php include('components/modals/upload.php') ?>
+        <!-- Update modal -->
+        <?php include('components/modals/update.php') ?>
 
         <section class="d-flex justify-content-center">
             <!-- Post area -->
