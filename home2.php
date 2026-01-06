@@ -14,6 +14,16 @@ if (isset($_GET['search'])) {
 
 //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
 $stmt = $pdo->prepare("
+    WITH likes_counts (post_id, likes_count)
+    AS (
+        SELECT post_id,
+        		count(user_username)
+        		from likes
+        GROUP BY
+        	post_id
+
+    )
+
     SELECT 
     posts.id as post_id,
     posts.parent_id,
@@ -24,9 +34,11 @@ $stmt = $pdo->prepare("
     post_media.id as media_id,
     post_media.file_url,
     post_media.media_type,
-    post_media.order_index
+    post_media.order_index,
+    likes_counts.likes_count
     FROM posts
     LEFT JOIN post_media ON posts.id = post_media.post_id
+    LEFT JOIN likes_counts ON posts.id = likes_counts.post_id
     WHERE posts.id IN (
         SELECT id 
         FROM posts 
@@ -53,6 +65,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             'user_username' => $row['user_username'],
             'status' => $row['status'],
             'created_at' => $row['created_at'],
+            'likes_count' => $row['likes_count'],
             'media' => []
         ];
     }

@@ -38,6 +38,8 @@
         echo ("</div>");
     }
 
+    echo ("<div style=\"margin-to:10px; margin-bottom:10px;\"> <i class=\"bi bi-heart\"></i> " . $post['likes_count'] . "</div>");
+
     if ($post['user_username'] == $_SESSION['user_id']) {
         echo ("<div style=\"margin-top: 10px;\">");
         echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#updateModal\" data-bs-postid=" . $post['id'] . ">update</button>");
