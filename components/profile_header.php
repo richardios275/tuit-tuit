@@ -11,14 +11,14 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Get the profile user's follow count
 // Following
-$stmt = $pdo->prepare("SELECT COUNT(*) AS row_count FROM follows WHERE `followed_user_username` = ?");
+$stmt = $pdo->prepare("SELECT COUNT(*) AS count FROM follows WHERE `followed_user_username` = ?");
 $stmt->execute([$profile_username]);
-$following = $stmt->fetch(PDO::FETCH_ASSOC);
+$following = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
 
 // Followers
-$stmt = $pdo->prepare("SELECT COUNT(*) AS row_count FROM follows WHERE `following_user_username` = ?");
+$stmt = $pdo->prepare("SELECT COUNT(*) AS count FROM follows WHERE `following_user_username` = ?");
 $stmt->execute([$profile_username]);
-$followers = $stmt->fetch(PDO::FETCH_ASSOC);
+$followers = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
 ?>
 
 <style>
@@ -57,10 +57,13 @@ $followers = $stmt->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row mt-3 <?php if ($username == $profile_username) {echo 'd-none';}?>">
-        <button class="btn btn-primary">Follow</button>
+    <div class="d-flex flex-row mt-3 align-items-end <?php if ($username == $profile_username) {echo 'd-none';}?>">
+        <div>
+            <button class="btn btn-primary">Follow</button>
+            </div>
+        
     </div>
-    <div class="d-flex flex-row mt-3 <?php if ($username != $profile_username) {echo 'd-none';}?>">
+    <div class="d-flex flex-row mt-3 align-items-end <?php if ($username != $profile_username) {echo 'd-none';}?>">
         <a href="/settings">
             <button class="btn btn-primary">Settings</button>
         </a>
