@@ -1,10 +1,8 @@
 <?php
 session_start();
 require_once '../config/db.php';
+echo("<br>");
 
-echo('updated '.$_POST['input']);
-
-/*
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -18,15 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
     $sql="
-        
+        UPDATE `posts` 
+        SET
+        `body`, 
+        `status`, 
+        ) 
+        VALUES 
+        (
+        :body, 
+        'online,edited', 
+        )
+        WHERE `id` = :post_id
+        AND `user_username` = :user_id
+        ;
         "
         ;
 
     try {
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(
-            ':body' => $_POST['body'],
-            ':user_id' => $_SESSION['user_id']));
+            ':user_id' => $_SESSION['user_id'],
+            ':post_id' => $_POST['postId'],
+            ':body' => $_POST['body']));
 
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
@@ -34,4 +45,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo ''. $e->getMessage() .'';
     }
 }
-*/

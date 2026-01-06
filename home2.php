@@ -131,17 +131,6 @@ $posts = array_values($posts);
 <script>
 
     let targetPost = 0;
-    const updateModal = document.getElementById("updateModal");
-
-    if updateModal() {
-        updateModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const postId = button.getAttribute('data-bs-postid');
-
-            const postIdInput;
-        })
-    }
-
     function onUpdateButtonPressed(postId) {
         targetPost = postId;
         console.log(targetPost);

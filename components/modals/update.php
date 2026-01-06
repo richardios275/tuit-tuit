@@ -42,13 +42,15 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <form id="postUploadForm" method="POST" action="/actions/post_action.php">
-                    <div class="mb-3 d-none"
+                <form id="postUploadForm" method="POST" action="/actions/update_action.php">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="updatePostIdInput" name="postId">
+                    </div>
                     <div class="mb-3">
                         <!-- the texts -->
-                        <textarea id="post-body" class="form-control" name="body" rows="5"
+                        <textarea id="updatePostBody" class="form-control" name="body" rows="5"
                             placeholder="What's on your mind?" required></textarea>
-                        <div id="post-limit" class="form-text">0/300</div>
+                        <div id="updatePostLimit" class="form-text">0/300</div>
                     </div>
 
                     <input type="hidden" id="parentId" name="parent_id" value="0">
@@ -72,19 +74,29 @@
 
 <script>
     const updateModal = document.getElementById("updateModal");
-    const postBody = document.getElementById("post-body");
-    const postLimit = document.getElementById("post-limit");
+    const updatePostIdInput = document.getElementById("updatePostIdInput");
+    const updatePostBody = document.getElementById("updatePostBody");
+    const updatePostLimit = document.getElementById("updatePostLimit");
 
-    // Focus
-    if (uploadModal) {
-        postBody.focus();
+    // Focus and Auto input postID
+    if (updateModal) {
+        updatePostBody.focus();
+
+        updateModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const postId = button.getAttribute('data-bs-postid');
+
+            updatePostIdInput.value = postId;
+
+            const currentupdatePostBody = document.getElementById('post-' + postId + '-body')
+            if (currentupdatePostBody) {
+            updatePostBody.value = currentupdatePostBody.innerText;
+            }
+            
+        })
     }
 
     // Limit Text
-    const textLimit = 300;
-    const cjkRegex =
-        /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\uAC00-\uD7AF\u3130-\u318F\u1100-\u11FF]/g;
-
     function countCharacters(text) {
         const cjkMatches = text.match(cjkRegex);
         const cjkCount = cjkMatches ? cjkMatches.length : 0;
@@ -94,41 +106,41 @@
 
     function showLimitFeedback() {
         console.log("Ye Shunguang's big schlong")
-        postBody.classList.add("shake")
+        updatePostBody.classList.add("shake")
         setTimeout(() => {
-            postBody.classList.remove('shake');
+            updatePostBody.classList.remove('shake');
         }, 500);
     }
 
     // This is to handle Firefox bs
-    postBody.addEventListener("input", postBodyEvent);
-    postBody.addEventListener("keyup", postBodyEvent);
-    postBody.addEventListener("change", postBodyEvent);
-    postBody.addEventListener("paste", postBodyEvent);
-    postBody.addEventListener("cut", postBodyEvent);
+    updatePostBody.addEventListener("input", updatePostBodyEvent);
+    updatePostBody.addEventListener("keyup", updatePostBodyEvent);
+    updatePostBody.addEventListener("change", updatePostBodyEvent);
+    updatePostBody.addEventListener("paste", updatePostBodyEvent);
+    updatePostBody.addEventListener("cut", updatePostBodyEvent);
 
-    function postBodyEvent(e) {
+    function updatePostBodyEvent(e) {
         newBody = e.target.value
         bodyLength = countCharacters(newBody);
 
         // Remove red border from error
         if (bodyLength <= textLimit) {
-            if (postBody.classList.contains('border-danger')) {
-                postBody.classList.remove('border-danger')
+            if (updatePostBody.classList.contains('border-danger')) {
+                updatePostBody.classList.remove('border-danger')
             }
-            if (postLimit.classList.contains('text-danger')) {
-                postLimit.classList.remove('text-danger')
+            if (updatePostLimit.classList.contains('text-danger')) {
+                updatePostLimit.classList.remove('text-danger')
             }
         }
 
         // Remove text if exceeds limit
         if (bodyLength > textLimit) {
             if (e.data != null) {
-                postBody.value = newBody.slice(0, -1 * (countCharacters(e.data)));
+                updatePostBody.value = newBody.slice(0, -1 * (countCharacters(e.data)));
                 showLimitFeedback();
             }
         }
 
-        postLimit.innerHTML = Math.min(bodyLength, 300) + "/" + textLimit;
+        updatePostLimit.innerHTML = Math.min(bodyLength, 300) + "/" + textLimit;
     }
 </script>
