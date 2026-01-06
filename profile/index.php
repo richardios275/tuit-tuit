@@ -78,6 +78,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             'user_username' => $row['user_username'],
             'status' => $row['status'],
             'created_at' => $row['created_at'],
+            'likes_count' => $row['likes_count'] ?? 0,
             'media' => []
         ];
     }
