@@ -38,9 +38,18 @@ $followers = $stmt->fetch(PDO::FETCH_ASSOC)["count"];
         <?php $iconSize = 60; $iconSource = "/public/images/default_user.jpg"; $iconClass = "me-3"; include $_SERVER['DOCUMENT_ROOT'] . '/components/profile_icon.php';?>
         
         <div class="d-flex flex-column justify-content-center">
-            <?php
+             <div class="d-flex flex-row align-items-end">
+                <?php
             $displayName = $user['displayname'] ? $user['displayname'] : '@' . $user['username'];
-            echo '<div class="fs-5 fw-semibold">' . htmlspecialchars( $displayName ) . '</div>';
+            echo '<div class="me-2 fs-5 fw-semibold">' . htmlspecialchars( $displayName ) . '</div>';
+            ?>
+            <?php
+            if ($user['pronouns']) {
+                echo '<small>('. htmlspecialchars( $user['pronouns'] ) . ')</small>';
+            }
+            ?>
+            </div>
+            <?php
             if ('@'.$user['username'] != $displayName) {
                 echo '<div class="fs-6">@'. htmlspecialchars( $user['username'] ) . '</div>';
             }

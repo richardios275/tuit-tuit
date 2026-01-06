@@ -26,7 +26,8 @@
 </style>
 
 <div id="post-<?php echo $post["id"] ?>" class="post-squares">
-    <a href="/profile/<?php echo htmlspecialchars($post['user_username']); ?>" class="fs-5 text-decoration-none"><?php echo htmlspecialchars($post['user_username']); ?></a>
+    <a href="/profile/<?php echo htmlspecialchars($post['user_username']); ?>"
+        class="fs-5 text-decoration-none"><?php echo htmlspecialchars($post['user_username']); ?></a>
     <div id="post-<?php echo $post["id"] ?>-body"><?php echo htmlspecialchars($post['body']); ?></div>
 
     <?php
@@ -37,28 +38,58 @@
         }
         echo ("</div>");
     }
-
-    if ($post['user_username'] == $_SESSION['user_id']) {
-        echo ("<div style=\"margin-top: 10px;\">");
-        echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#updateModal\" data-bs-postid=" . $post['id'] . ">update</button>");
-        echo ("<button class=\"btn btn-primary\" onclick=\"delete_post('" . $post['id'] . "')\">delete</button>");
-        echo ("</div>");
-    }
     ?>
+
+    <div class="mt-2 d-flex flex-row justify-content-between">
+        <div>
+            <button id="post-<?php echo $post["id"]; ?>-likeButton" class="btn btn-danger d-flex flex-row">
+                <i id="post-<?php echo $post["id"]; ?>-likeIcon" class="bi bi-heart me-2"></i>
+                <div id="post-<?php echo $post["id"]; ?>-likeCount">0</div>
+            </button>
+        </div>
+        <div>
+            <?php
+            if ($post['user_username'] == $_SESSION['user_id']) {
+                echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#updateModal\" data-bs-postid=" . $post['id'] . ">update</button>");
+                echo ("<button class=\"btn btn-primary\" onclick=\"delete_post('" . $post['id'] . "')\">delete</button>");
+            }
+            ?>
+        </div>
+    </div>
 </div>
 
 <script>
     function delete_post(id) {
-
         $.ajax({
             type: "POST",
             url: 'actions/delete_action.php',
             data: { input: id },
-            success: function(response) {
+            success: function (response) {
                 alert("your post has been deleted.")
-        location.reload()
+                location.reload()
             }
         });
     }
 
+    function onLikeAction(postId) {
+        const likeButton = document.getElementById("post-" + postId + "-likeButton");
+        const likeIcon = document.getElementById("post-" + postId + "-likeIcon");
+        const likeCounter = document.getElementById("post-" + postId + "-likeCounter");
+
+        likeButton.disabled = true;
+        $.ajax({
+            type: "POST",
+            url: '/actions/like_action.php',
+            data: { id: postId },
+            success: function (response) {
+                likeButton.disabled = false;
+                if (response == 'liked') {
+                    //likeIcon. = "Unfollow";
+                    likeCounter.innerText = Number(likeCounter.innerText) + 1;
+                } else {
+                }
+
+                //location.reload();
+            }
+        });
 </script>
