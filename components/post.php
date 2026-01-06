@@ -33,7 +33,7 @@
     if (!empty($post["media"])) {
         echo ("<div class=\"image-preview-container\">");
         foreach ($post["media"] as $media) {
-            echo ("<img src=\"" . $media['file_url'] . "\" alt=\"\" class=\"image-preview\">");
+            echo ("<img src=\"/" . $media['file_url'] . "\" alt=\"\" class=\"image-preview\">");
         }
         echo ("</div>");
     }
