@@ -42,7 +42,7 @@
 
     <div class="mt-2 d-flex flex-row justify-content-between">
         <div>
-            <button id="post-<?php echo $post["id"]; ?>-likeButton" class="btn btn-danger d-flex flex-row">
+            <button id="post-<?php echo $post["id"]; ?>-likeButton" class="btn btn-danger d-flex flex-row" onclick="onLikeAction('<?php echo $post["id"]; ?>')">
                 <i id="post-<?php echo $post["id"]; ?>-likeIcon" class="bi bi-heart me-2"></i>
                 <div id="post-<?php echo $post["id"]; ?>-likeCount"><?php echo $post["likes_count"];?></div>
             </button>
@@ -72,9 +72,10 @@
     }
 
     function onLikeAction(postId) {
+        console.log("like button clicked for post ID: " + postId);
         const likeButton = document.getElementById("post-" + postId + "-likeButton");
         const likeIcon = document.getElementById("post-" + postId + "-likeIcon");
-        const likeCounter = document.getElementById("post-" + postId + "-likeCounter");
+        const likeCount = document.getElementById("post-" + postId + "-likeCount");
 
         likeButton.disabled = true;
         $.ajax({
@@ -85,12 +86,13 @@
                 likeButton.disabled = false;
                 if (response == 'liked') {
                     //likeIcon. = "Unfollow";
-                    likeCounter.innerText = Number(likeCounter.innerText) + 1;
+                    likeCount.innerText = Number(likeCount.innerText) + 1;
                 } else {
-                    likeCounter.innerText = Number(likeCounter.innerText) - 1;
+                    likeCount.innerText = Number(likeCount.innerText) - 1;
                 }
 
                 //location.reload();
             }
         });
+    }
 </script>
