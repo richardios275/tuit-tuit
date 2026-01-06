@@ -25,7 +25,7 @@
     }
 </style>
 
-<div class="post-squares">
+<div id="post-<?php echo $post["id"] ?>" class="post-squares">
     <h5><?php echo htmlspecialchars($post['user_username']); ?></h5>
     <div><?php echo htmlspecialchars($post['body']); ?></div>
 
@@ -40,7 +40,7 @@
 
     if ($post['user_username'] == $_SESSION['user_id']) {
         echo ("<div style=\"margin-top: 10px;\">");
-        echo ("<button class=\"btn btn-primary me-2\" onclick=\"update_post('" . $post['id'] . "')\">update</button>");
+        echo ("<button class=\"btn btn-primary me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#uploadModal\" data-bs-postid=" . $post['id'] . "onclick=\"onUpdateButtonPressed('" . $post['id'] . "')\">update</button>");
         echo ("<button class=\"btn btn-primary\" onclick=\"delete_post('" . $post['id'] . "')\">delete</button>");
         echo ("</div>");
     }

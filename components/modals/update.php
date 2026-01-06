@@ -38,11 +38,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitleId">
-                    update
+                    Update Post
                 </h5>
             </div>
             <div class="modal-body">
                 <form id="postUploadForm" method="POST" action="/actions/post_action.php">
+                    <div class="mb-3 d-none"
                     <div class="mb-3">
                         <!-- the texts -->
                         <textarea id="post-body" class="form-control" name="body" rows="5"
@@ -70,7 +71,7 @@
 </div>
 
 <script>
-    const uploadModal = document.getElementById("uploadModal");
+    const updateModal = document.getElementById("updateModal");
     const postBody = document.getElementById("post-body");
     const postLimit = document.getElementById("post-limit");
 
