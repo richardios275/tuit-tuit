@@ -87,10 +87,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 // Convert to indexed array
 $posts = array_values($posts);
-
-echo("<pre>\n");
-print_r($posts);
-echo("</pre>\n");
 ?>
 
 <?php $title=$profile_username . "'s Profile"; include($_SERVER['DOCUMENT_ROOT'] . '/components/main_header.php'); ?>

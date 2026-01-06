@@ -18,14 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql="
         UPDATE `posts` 
         SET
-        `body`, 
-        `status`, 
-        ) 
-        VALUES 
-        (
-        :body, 
-        'online,edited', 
-        )
+        `body` = :body, 
+        `status` = 'online,edited'
         WHERE `id` = :post_id
         AND `user_username` = :user_id
         ;
