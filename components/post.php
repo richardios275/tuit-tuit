@@ -44,7 +44,7 @@
         <div>
             <button id="post-<?php echo $post["id"]; ?>-likeButton" class="btn btn-danger d-flex flex-row">
                 <i id="post-<?php echo $post["id"]; ?>-likeIcon" class="bi bi-heart me-2"></i>
-                <div id="post-<?php echo $post["id"]; ?>-likeCount">0</div>
+                <div id="post-<?php echo $post["id"]; ?>-likeCount"><?php echo $post["likes_count"];?></div>
             </button>
         </div>
         <div>
