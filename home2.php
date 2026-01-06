@@ -109,7 +109,7 @@ $posts = array_values($posts);
 
 
 
-    <script src="home2.js"></script>
+    <!-- <script src="home2.js"></script> -->
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
