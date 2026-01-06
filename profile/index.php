@@ -4,6 +4,8 @@ if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
     header("Location: login");
 }
 
+define('APP_INCLUDED', true);
+
 $profile_username = $_GET['username'];
 // Prevent accessing profile without a getter
 if (empty($profile_username)) {
@@ -20,11 +22,6 @@ if (isset($_GET['search'])) {
 }
 
 //$pdo=new PDO('mysql:host=localhost;port=3306;dbname=tuituit','root', '');
-
-// Get the profile user's info
-$stmt = $pdo->prepare("SELECT username, displayname, bio, profile_pic, created_at, pronouns FROM users WHERE username = ?");
-$stmt->execute([$profile_username]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $stmt = $pdo->prepare("
     SELECT 
