@@ -87,8 +87,14 @@
                 if (response == 'liked') {
                     //likeIcon. = "Unfollow";
                     likeCount.innerText = Number(likeCount.innerText) + 1;
+                    likeCount.classList.remove("bi-heart");
+                    likeCount.classList.remove("bi-heart-fill");
+                    likeCount.classList.add("bi-heart-fill");
                 } else {
                     likeCount.innerText = Number(likeCount.innerText) - 1;
+                    likeCount.classList.remove("bi-heart");
+                    likeCount.classList.remove("bi-heart-fill");
+                    likeCount.classList.add("bi-heart");
                 }
 
                 //location.reload();
